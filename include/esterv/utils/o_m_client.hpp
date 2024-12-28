@@ -16,6 +16,8 @@
 #define OMClient_EXPORT Q_DECL_IMPORT
 #endif
 
+namespace Esterv::Utils::Weather{
+
 class OMClient_EXPORT OMResponse : public QObject {
   Q_OBJECT
 public:
@@ -83,3 +85,4 @@ private:
   TempUnit m_tempUnit;
   static QHash<TempUnit, QString> tempUnitStr;
 };
+}
