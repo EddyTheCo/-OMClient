@@ -1,20 +1,24 @@
 cmake_minimum_required(VERSION 3.24)
 
 option(USE_QML "Create QML types and modules" ON)
+option(BUILD_EXAMPLES "Build the examples" ON)
+option(QTDEPLOY "Deploy Qt dependencies for examples" ON)
+option(BUILD_DOCS "Build documentation" ON)
+
 include(${CMAKE_CURRENT_BINARY_DIR}/local_conf.cmake OPTIONAL)
 
 include(FetchContent)
 FetchContent_Declare(
 	ccommon
 	GIT_REPOSITORY https://github.com/EddyTheCo/Common.git
-	GIT_TAG v0.4.0
+	GIT_TAG v0.5.1
 	)
 FetchContent_MakeAvailable(ccommon)
 version_from_git(
 	LOG       OFF
 	TIMESTAMP "%Y%m%d%H%M%S"
 	)
-project(openMeteo VERSION ${VERSION} DESCRIPTION "OpenMeteo client library" LANGUAGES CXX)
+	project(EstervOpenMeteo VERSION ${VERSION} DESCRIPTION "OpenMeteo client library" LANGUAGES CXX)
 
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
@@ -31,7 +35,7 @@ endif(USE_QML)
 
 if (Qt6_FOUND)
 	qt_standard_project_setup()
-	add_library(OMClient  src/omclient.cpp include/omclient.hpp)
+	add_library(OMClient  src/o_m_client.cpp include/esterv/utils/o_m_client.hpp)
 	if(USE_QML)
 		qt6_add_qml_module(OMClient
 			URI  Esterv.CustomControls.OpenMeteo
@@ -48,8 +52,10 @@ if (Qt6_FOUND)
 			${CMAKE_BINARY_DIR}/Esterv/CustomControls/OpenMeteo
 			IMPORT_PATH ${CMAKE_BINARY_DIR}
 			)
-		add_library(${PROJECT_NAME}::OMClientplugin ALIAS OMClientplugin)
+			add_library(Esterv::OMClientplugin ALIAS OMClientplugin)
 		target_compile_definitions(OMClient PRIVATE USE_QML)
+    target_include_directories(
+      OMClient PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include/esterv/utils)
 		qt6_add_shaders(OMClient "esterVtech.com.imports.OMClient.shaders"
 			BATCHABLE
 			PRECOMPILE
@@ -72,38 +78,36 @@ if (Qt6_FOUND)
 		install(TARGETS ${out_targets_var} ${out_targets_var2}
 			EXPORT ${PROJECT_NAME}-config
 			DESTINATION ${CMAKE_INSTALL_LIBDIR}
-			COMPONENT omclient
-			RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}" COMPONENT omclient
-			)
+      COMPONENT ${PROJECT_NAME}-qml
+      RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
+              COMPONENT ${PROJECT_NAME}-qml)
 		install(DIRECTORY ${CMAKE_BINARY_DIR}/Esterv/CustomControls/OpenMeteo
 			DESTINATION ${CMAKE_INSTALL_LIBDIR}/Esterv/CustomControls
-			COMPONENT omclient
-			)
+      COMPONENT ${PROJECT_NAME}-qml)
 		install(TARGETS OMClientplugin
 			EXPORT ${PROJECT_NAME}-config
 			DESTINATION ${CMAKE_INSTALL_LIBDIR}/Esterv/CustomControls/OpenMeteo
-			COMPONENT omclient
-			RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}" COMPONENT omclient
-			)
+      COMPONENT ${PROJECT_NAME}-qml
+      RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
+              COMPONENT ${PROJECT_NAME}-qml)
 	endif(USE_QML)
-	add_library(${PROJECT_NAME}::OMClient ALIAS OMClient)
+	add_library(Esterv::OMClient ALIAS OMClient)
 	target_link_libraries(OMClient PUBLIC Qt6::Core Qt6::Network)
 
 	target_include_directories(OMClient PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-		"$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/Esterv/${PROJECT_NAME}>")
+		"$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")
 
 	target_compile_definitions(OMClient PRIVATE WINDOWS_OMClient)
 
 	install(TARGETS OMClient
 		EXPORT ${PROJECT_NAME}-config
 		DESTINATION ${CMAKE_INSTALL_LIBDIR}
-		COMPONENT omclient
-		RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}" COMPONENT omclient
-		)
-	install(DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/include/
-		DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/Esterv/${PROJECT_NAME}
-		COMPONENT ${PROJECT_NAME}
-		)
+    COMPONENT ${PROJECT_NAME}
+    RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}" COMPONENT ${PROJECT_NAME})
+  install(
+    DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+    COMPONENT ${PROJECT_NAME}-dev)
 
 	build_exports()
 	if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
