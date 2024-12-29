@@ -19,6 +19,8 @@ ApplicationWindow {
             code1Am0.iTime += 0.05;
             code0Am1.iTime += 0.05;
             code0Am0.iTime += 0.05;
+            code45Am1.iTime += 0.05;
+            code45Am0.iTime += 0.05;
         }
     }
     ScrollView {
@@ -86,6 +88,7 @@ ApplicationWindow {
                 fragmentShader: "qrc:/esterVtech.com/imports/Designs/frag/code1Am0.frag.qsb"
             }
         }
+
         Rectangle {
             id: code2Am1Box
             color: "#10141c"
@@ -133,11 +136,42 @@ ApplicationWindow {
                 fragmentShader: "qrc:/esterVtech.com/imports/Designs/frag/code3.frag.qsb"
             }
         }
+        Rectangle {
+            id: code45Am1Box
+            color: "#10141c"
+            width: parent.width * 0.5
+            height: width
+            anchors.top: code2Am1Box.bottom
+            anchors.left: code3Box.right
+            ShaderEffect {
+                id: code45Am1
+                anchors.fill: code45Am1Box
+                property var src: code45Am1Box
+                property real iTime: 0.0
+                property var pixelStep: Qt.vector2d(1 / src.width, 1 / src.height)
+                fragmentShader: "qrc:/esterVtech.com/imports/Designs/frag/code45Am1.frag.qsb"
+            }
+        }
+        Rectangle {
+            id: code45Am0Box
+            color: "#10141c"
+            anchors.top: code45Am1Box.bottom
+            width: parent.width * 0.5
+            height: width
+            ShaderEffect {
+                id: code45Am0
+                anchors.fill: code45Am0Box
+                property var src: code45Am0Box
+                property real iTime: 0.0
+                property var pixelStep: Qt.vector2d(1 / src.width, 1 / src.height)
+                fragmentShader: "qrc:/esterVtech.com/imports/Designs/frag/code45Am0.frag.qsb"
+            }
+        }
         CurrentWeather {
             width: parent.width * 0.5
             height: width
-            anchors.left: code3Box.right
-            anchors.top: code2Am1Box.bottom
+            anchors.left: code45Am0Box.right
+            anchors.top: code3Box.bottom
             latitude: 41.902916
             longitude: 12.453389
             color: "lightgray"
@@ -145,11 +179,12 @@ ApplicationWindow {
         CurrentWeather {
             width: parent.width * 0.5
             height: width
-            anchors.top: code3Box.bottom
+            anchors.top: code45Am0Box.bottom
             latitude: 41.902916
             longitude: 12.453389
             color: "green"
             showTime: false
         }
+
     }
 }
