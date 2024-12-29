@@ -71,6 +71,8 @@ if (Qt6_FOUND)
 			"frag/code1Am0.frag"
 			"frag/code0Am1.frag"
 			"frag/code0Am0.frag"
+                        "frag/code45Am1.frag"
+                        "frag/code45Am0.frag"
 			)
 
 		target_link_libraries(OMClient PUBLIC Qt6::Gui Qt6::Quick)
