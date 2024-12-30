@@ -1,11 +1,15 @@
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Layouts
 import Esterv.CustomControls.OpenMeteo
 
 ApplicationWindow {
     id: window
     visible: true
-
+background: Rectangle
+{
+    color: "#10141c"
+}
     Timer {
         id: timer
         interval: 50
@@ -33,238 +37,225 @@ ApplicationWindow {
         anchors.fill: parent
         contentWidth: width
         contentHeight: parent.width * 0.5 * 9
+        GridLayout {
+            id: grid
+            anchors.fill:parent
+            columns: 2
 
-        Rectangle {
-            id: code0Am1Box
-            color: "#10141c"
-            width: parent.width * 0.5
-            height: width
-            ShaderEffect {
-                id: code0Am1
-                anchors.fill: code0Am1Box
-                property var src: code0Am1Box
-                property real iTime: 0.0
-                property var pixelStep: Qt.vector2d(1 / src.width, 1 / src.height)
-                fragmentShader: "qrc:/esterVtech.com/imports/Designs/frag/code0Am1.frag.qsb"
+            Rectangle {
+                id: code0Am1Box
+                color: "transparent"
+                width: window.width * 0.5
+                height: width
+                ShaderEffect {
+                    id: code0Am1
+                    anchors.fill: code0Am1Box
+                    property var src: code0Am1Box
+                    property real iTime: 0.0
+                    property var pixelStep: Qt.vector2d(1 / src.width, 1 / src.height)
+                    fragmentShader: "qrc:/esterVtech.com/imports/Designs/frag/code0Am1.frag.qsb"
+                }
             }
-        }
-        Rectangle {
-            id: code0Am0Box
-            color: "#10141c"
-            anchors.left: code0Am1Box.right
-            width: parent.width * 0.5
-            height: width
-            ShaderEffect {
-                id: code0Am0
-                anchors.fill: code0Am0Box
-                property var src: code0Am0Box
-                property real iTime: 0.0
-                property var pixelStep: Qt.vector2d(1 / src.width, 1 / src.height)
-                fragmentShader: "qrc:/esterVtech.com/imports/Designs/frag/code0Am0.frag.qsb"
+            Rectangle {
+                id: code0Am0Box
+                color: "#10141c"
+                width: window.width * 0.5
+                height: width
+                ShaderEffect {
+                    id: code0Am0
+                    anchors.fill: code0Am0Box
+                    property var src: code0Am0Box
+                    property real iTime: 0.0
+                    property var pixelStep: Qt.vector2d(1 / src.width, 1 / src.height)
+                    fragmentShader: "qrc:/esterVtech.com/imports/Designs/frag/code0Am0.frag.qsb"
+                }
             }
-        }
-        Rectangle {
-            id: code1Am1Box
-            color: "#10141c"
-            width: parent.width * 0.5
-            height: width
-            anchors.top: code0Am1Box.bottom
-            ShaderEffect {
-                id: code1Am1
-                anchors.fill: code1Am1Box
-                property var src: code1Am1Box
-                property real iTime: 0.0
-                property var pixelStep: Qt.vector2d(1 / src.width, 1 / src.height)
-                fragmentShader: "qrc:/esterVtech.com/imports/Designs/frag/code1Am1.frag.qsb"
+            Rectangle {
+                id: code1Am1Box
+                color: "#10141c"
+                width: window.width * 0.5
+                height: width
+                ShaderEffect {
+                    id: code1Am1
+                    anchors.fill: code1Am1Box
+                    property var src: code1Am1Box
+                    property real iTime: 0.0
+                    property var pixelStep: Qt.vector2d(1 / src.width, 1 / src.height)
+                    fragmentShader: "qrc:/esterVtech.com/imports/Designs/frag/code1Am1.frag.qsb"
+                }
             }
-        }
-        Rectangle {
-            id: code1Am0Box
-            color: "#10141c"
-            anchors.top: code0Am0Box.bottom
-            anchors.left: code1Am1Box.right
-            width: parent.width * 0.5
-            height: width
-            ShaderEffect {
-                id: code1Am0
-                anchors.fill: code1Am0Box
-                property var src: code1Am0Box
-                property real iTime: 0.0
-                property var pixelStep: Qt.vector2d(1 / src.width, 1 / src.height)
-                fragmentShader: "qrc:/esterVtech.com/imports/Designs/frag/code1Am0.frag.qsb"
+            Rectangle {
+                id: code1Am0Box
+                color: "#10141c"
+                width: window.width * 0.5
+                height: width
+                ShaderEffect {
+                    id: code1Am0
+                    anchors.fill: code1Am0Box
+                    property var src: code1Am0Box
+                    property real iTime: 0.0
+                    property var pixelStep: Qt.vector2d(1 / src.width, 1 / src.height)
+                    fragmentShader: "qrc:/esterVtech.com/imports/Designs/frag/code1Am0.frag.qsb"
+                }
+            }
+
+
+            Rectangle {
+                id: code2Am1Box
+                color: "#10141c"
+                width: window.width * 0.5
+                height: width
+                ShaderEffect {
+                    id: code2Am1
+                    anchors.fill: code2Am1Box
+                    property var src: code2Am1Box
+                    property real iTime: 0.0
+                    property var pixelStep: Qt.vector2d(1 / src.width, 1 / src.height)
+                    fragmentShader: "qrc:/esterVtech.com/imports/Designs/frag/code2Am1.frag.qsb"
+                }
+            }
+            Rectangle {
+                id: code2Am0Box
+                color: "#10141c"
+                width: window.width * 0.5
+                height: width
+                ShaderEffect {
+                    id: code2Am0
+                    anchors.fill: code2Am0Box
+                    property var src: code2Am0Box
+                    property real iTime: 0.0
+                    property var pixelStep: Qt.vector2d(1 / src.width, 1 / src.height)
+                    fragmentShader: "qrc:/esterVtech.com/imports/Designs/frag/code2Am0.frag.qsb"
+                }
+            }
+            Rectangle {
+                id: code3Box
+                color: "#10141c"
+                width: window.width*0.5
+                height: width
+
+                ShaderEffect {
+                    id: code3
+                    anchors.fill: code3Box
+                    property var src: code3Box
+                    property real iTime: 0.0
+                    property var pixelStep: Qt.vector2d(1 / src.width, 1 / src.height)
+                    fragmentShader: "qrc:/esterVtech.com/imports/Designs/frag/code3.frag.qsb"
+                }
+            }
+            Rectangle {
+                id: code45Am1Box
+                color: "#10141c"
+                width: window.width * 0.5
+                height: width
+                ShaderEffect {
+                    id: code45Am1
+                    anchors.fill: code45Am1Box
+                    property var src: code45Am1Box
+                    property real iTime: 0.0
+                    property var pixelStep: Qt.vector2d(1 / src.width, 1 / src.height)
+                    fragmentShader: "qrc:/esterVtech.com/imports/Designs/frag/code45Am1.frag.qsb"
+                }
+            }
+            Rectangle {
+                id: code45Am0Box
+                color: "#10141c"
+                width: window.width * 0.5
+                height: width
+                ShaderEffect {
+                    id: code45Am0
+                    anchors.fill: code45Am0Box
+                    property var src: code45Am0Box
+                    property real iTime: 0.0
+                    property var pixelStep: Qt.vector2d(1 / src.width, 1 / src.height)
+                    fragmentShader: "qrc:/esterVtech.com/imports/Designs/frag/code45Am0.frag.qsb"
+                }
+            }
+            Rectangle {
+                id: code51Am1Box
+                color: "#10141c"
+                width: window.width * 0.5
+                height: width
+                ShaderEffect {
+                    id: code51Am1
+                    anchors.fill: code51Am1Box
+                    property var src: code51Am1Box
+                    property real iTime: 0.0
+                    property var pixelStep: Qt.vector2d(1 / src.width, 1 / src.height)
+                    fragmentShader: "qrc:/esterVtech.com/imports/Designs/frag/code51Am1.frag.qsb"
+                }
+            }
+            Rectangle {
+                id: code51Am0Box
+                color: "#10141c"
+                width: window.width * 0.5
+                height: width
+                ShaderEffect {
+                    id: code51Am0
+                    anchors.fill: code51Am0Box
+                    property var src: code51Am0Box
+                    property real iTime: 0.0
+                    property var pixelStep: Qt.vector2d(1 / src.width, 1 / src.height)
+                    fragmentShader: "qrc:/esterVtech.com/imports/Designs/frag/code51Am0.frag.qsb"
+                }
+            }
+            Rectangle {
+                id: code53Am1Box
+                color: "#10141c"
+                width: window.width * 0.5
+                height: width
+                ShaderEffect {
+                    id: code53Am1
+                    anchors.fill: code53Am1Box
+                    property var src: code53Am1Box
+                    property real iTime: 0.0
+                    property var pixelStep: Qt.vector2d(1 / src.width, 1 / src.height)
+                    fragmentShader: "qrc:/esterVtech.com/imports/Designs/frag/code53Am1.frag.qsb"
+                }
+            }
+            Rectangle {
+                id: code53Am0Box
+                color: "#10141c"
+                width: window.width * 0.5
+                height: width
+                ShaderEffect {
+                    id: code53Am0
+                    anchors.fill: code53Am0Box
+                    property var src: code53Am0Box
+                    property real iTime: 0.0
+                    property var pixelStep: Qt.vector2d(1 / src.width, 1 / src.height)
+                    fragmentShader: "qrc:/esterVtech.com/imports/Designs/frag/code53Am0.frag.qsb"
+                }
+            }
+            Rectangle {
+                id: code55Am1Box
+                color: "#10141c"
+                width: window.width * 0.5
+                height: width
+                ShaderEffect {
+                    id: code55Am1
+                    anchors.fill: code55Am1Box
+                    property var src: code55Am1Box
+                    property real iTime: 0.0
+                    property var pixelStep: Qt.vector2d(1 / src.width, 1 / src.height)
+                    fragmentShader: "qrc:/esterVtech.com/imports/Designs/frag/code55Am1.frag.qsb"
+                }
+            }
+            Rectangle {
+                id: code55Am0Box
+                color: "#10141c"
+                width: window.width * 0.5
+                height: width
+                ShaderEffect {
+                    id: code55Am0
+                    anchors.fill: code55Am0Box
+                    property var src: code55Am0Box
+                    property real iTime: 0.0
+                    property var pixelStep: Qt.vector2d(1 / src.width, 1 / src.height)
+                    fragmentShader: "qrc:/esterVtech.com/imports/Designs/frag/code55Am0.frag.qsb"
+                }
             }
         }
 
-        Rectangle {
-            id: code2Am1Box
-            color: "#10141c"
-            width: parent.width * 0.5
-            height: width
-            anchors.top: code1Am1Box.bottom
-            ShaderEffect {
-                id: code2Am1
-                anchors.fill: code2Am1Box
-                property var src: code2Am1Box
-                property real iTime: 0.0
-                property var pixelStep: Qt.vector2d(1 / src.width, 1 / src.height)
-                fragmentShader: "qrc:/esterVtech.com/imports/Designs/frag/code2Am1.frag.qsb"
-            }
-        }
-        Rectangle {
-            id: code2Am0Box
-            color: "#10141c"
-            anchors.top: code1Am0Box.bottom
-            anchors.left: code2Am1Box.right
-            width: parent.width * 0.5
-            height: width
-            ShaderEffect {
-                id: code2Am0
-                anchors.fill: code2Am0Box
-                property var src: code2Am0Box
-                property real iTime: 0.0
-                property var pixelStep: Qt.vector2d(1 / src.width, 1 / src.height)
-                fragmentShader: "qrc:/esterVtech.com/imports/Designs/frag/code2Am0.frag.qsb"
-            }
-        }
-        Rectangle {
-            id: code3Box
-            color: "#10141c"
-            width: parent.width * 0.5
-            height: width
-            anchors.top: code2Am1Box.bottom
-
-            ShaderEffect {
-                id: code3
-                anchors.fill: code3Box
-                property var src: code3Box
-                property real iTime: 0.0
-                property var pixelStep: Qt.vector2d(1 / src.width, 1 / src.height)
-                fragmentShader: "qrc:/esterVtech.com/imports/Designs/frag/code3.frag.qsb"
-            }
-        }
-        Rectangle {
-            id: code45Am1Box
-            color: "#10141c"
-            width: parent.width * 0.5
-            height: width
-            anchors.top: code2Am1Box.bottom
-            anchors.left: code3Box.right
-            ShaderEffect {
-                id: code45Am1
-                anchors.fill: code45Am1Box
-                property var src: code45Am1Box
-                property real iTime: 0.0
-                property var pixelStep: Qt.vector2d(1 / src.width, 1 / src.height)
-                fragmentShader: "qrc:/esterVtech.com/imports/Designs/frag/code45Am1.frag.qsb"
-            }
-        }
-        Rectangle {
-            id: code45Am0Box
-            color: "#10141c"
-            anchors.top: code45Am1Box.bottom
-            width: parent.width * 0.5
-            height: width
-            ShaderEffect {
-                id: code45Am0
-                anchors.fill: code45Am0Box
-                property var src: code45Am0Box
-                property real iTime: 0.0
-                property var pixelStep: Qt.vector2d(1 / src.width, 1 / src.height)
-                fragmentShader: "qrc:/esterVtech.com/imports/Designs/frag/code45Am0.frag.qsb"
-            }
-        }
-        Rectangle {
-            id: code51Am1Box
-            color: "#10141c"
-            width: parent.width * 0.5
-            height: width
-            anchors.top: code45Am1Box.bottom
-            anchors.left: code45Am0Box.right
-            ShaderEffect {
-                id: code51Am1
-                anchors.fill: code51Am1Box
-                property var src: code51Am1Box
-                property real iTime: 0.0
-                property var pixelStep: Qt.vector2d(1 / src.width, 1 / src.height)
-                fragmentShader: "qrc:/esterVtech.com/imports/Designs/frag/code51Am1.frag.qsb"
-            }
-        }
-        Rectangle {
-            id: code51Am0Box
-            color: "#10141c"
-            anchors.top: code45Am0Box.bottom
-            width: parent.width * 0.5
-            height: width
-            ShaderEffect {
-                id: code51Am0
-                anchors.fill: code51Am0Box
-                property var src: code51Am0Box
-                property real iTime: 0.0
-                property var pixelStep: Qt.vector2d(1 / src.width, 1 / src.height)
-                fragmentShader: "qrc:/esterVtech.com/imports/Designs/frag/code51Am0.frag.qsb"
-            }
-        }
-        Rectangle {
-            id: code53Am1Box
-            color: "#10141c"
-            width: parent.width * 0.5
-            height: width
-            anchors.top: code51Am1Box.bottom
-            anchors.left: code51Am0Box.right
-            ShaderEffect {
-                id: code53Am1
-                anchors.fill: code53Am1Box
-                property var src: code53Am1Box
-                property real iTime: 0.0
-                property var pixelStep: Qt.vector2d(1 / src.width, 1 / src.height)
-                fragmentShader: "qrc:/esterVtech.com/imports/Designs/frag/code53Am1.frag.qsb"
-            }
-        }
-        Rectangle {
-            id: code53Am0Box
-            color: "#10141c"
-            anchors.top: code51Am0Box.bottom
-            width: parent.width * 0.5
-            height: width
-            ShaderEffect {
-                id: code53Am0
-                anchors.fill: code53Am0Box
-                property var src: code53Am0Box
-                property real iTime: 0.0
-                property var pixelStep: Qt.vector2d(1 / src.width, 1 / src.height)
-                fragmentShader: "qrc:/esterVtech.com/imports/Designs/frag/code53Am0.frag.qsb"
-            }
-        }
-        Rectangle {
-            id: code55Am1Box
-            color: "#10141c"
-            width: parent.width * 0.5
-            height: width
-            anchors.top: code53Am1Box.bottom
-            anchors.left: code53Am0Box.right
-            ShaderEffect {
-                id: code55Am1
-                anchors.fill: code55Am1Box
-                property var src: code55Am1Box
-                property real iTime: 0.0
-                property var pixelStep: Qt.vector2d(1 / src.width, 1 / src.height)
-                fragmentShader: "qrc:/esterVtech.com/imports/Designs/frag/code55Am1.frag.qsb"
-            }
-        }
-        Rectangle {
-            id: code55Am0Box
-            color: "#10141c"
-            anchors.top: code53Am0Box.bottom
-            width: parent.width * 0.5
-            height: width
-            ShaderEffect {
-                id: code55Am0
-                anchors.fill: code55Am0Box
-                property var src: code55Am0Box
-                property real iTime: 0.0
-                property var pixelStep: Qt.vector2d(1 / src.width, 1 / src.height)
-                fragmentShader: "qrc:/esterVtech.com/imports/Designs/frag/code55Am0.frag.qsb"
-            }
-        }
     }
 }
