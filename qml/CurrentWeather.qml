@@ -31,13 +31,11 @@ Item {
     OMClient {
         id: omclient
         onCurrentWeatherChanged: {
-            if (omclient.currentWeather.weathercode < 4) {
+
                 let cions = "code" + omclient.currentWeather.weathercode;
-                if (omclient.currentWeather.weathercode < 3) {
                     cions += "Am" + omclient.currentWeather.is_day;
-                }
                 shader.codeIcons = cions;
-            }
+
             temp.text = (isNaN(Math.round(omclient.currentWeather.temperature))) ? "" : (Math.round(omclient.currentWeather.temperature) + "\u00b0");
         }
     }
