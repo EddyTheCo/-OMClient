@@ -31,11 +31,11 @@ if(USE_QML AND BUILD_EXAMPLES)
       BUNDLE DESTINATION . COMPONENT ${PROJECT_NAME}-examples
       LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
               COMPONENT ${PROJECT_NAME}-examples)
-    if(QTDEPLOY)
+    if(QTDEPLOY AND NOT ANDROID AND NOT EMSCRIPTEN)
       qt_generate_deploy_qml_app_script(TARGET ${example} OUTPUT_SCRIPT
                                         deploy_script)
       install(SCRIPT ${deploy_script} COMPONENT ${PROJECT_NAME}-examples)
-    endif(QTDEPLOY)
+    endif(QTDEPLOY AND NOT ANDROID AND NOT EMSCRIPTEN)
     if(ANDROID)
       set_property(
         TARGET ${example}
