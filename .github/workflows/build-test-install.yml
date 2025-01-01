@@ -1,6 +1,6 @@
 name: push-build-release
-run-name: ${{ github.actor }} ${{ github.event_name }} to ${{ github.base_ref }}
-on:
+run-name: ${{ github.actor }} ${{ github.event_name }} to ${{ github.event.pull_request.base.ref }}
+on: 
 
   push:
     tags:
@@ -9,28 +9,19 @@ on:
     branches: [develop]
 jobs:
   build_test_package:
-    permissions: read-all
     strategy:
       matrix:
-        os: [ubuntu-latest,macos-latest,windows-latest]
+        os: [ubuntu-latest,macos-latest,windows-latest] 
 
-    uses: EddyTheCo/Common/.github/workflows/build-test-install.yml@v0.4.0
+    uses: EddyTheCo/Common/.github/workflows/build-test-install.yml@v0.5.1
     with:
       os: ${{ matrix.os }}
-      qtModules: 'qtshadertools'
-      qtVersion: '6.6.0'
-      cmakeArgs: " -DQTDEPLOY=ON -DBUILD_EXAMPLES=ON -DCPACK_PACKAGE_CONTACT=estervtech@gmail.com -DREPO_URL=https://eddytheco.github.io/OMClient -DCPACK_PACKAGE_VENDOR=estervtech"
-      test: false
-      qmllint: ${{ startsWith(matrix.os, 'ubuntu') && startsWith(github.base_ref, 'develop') }}
-
-
-  build_doxygen:
-    if: startsWith(github.ref, 'refs/tags/v')
-    uses: EddyTheCo/Common/.github/workflows/build-docs.yml@v0.4.0
-
+      qtVersion: '6.8.1'
+      qtModules: 'qtshadertools' 
+  
   release:
     if: startsWith(github.ref, 'refs/tags/v')
-    needs: [build_test_package, build_doxygen]
+    needs: build_test_package
     runs-on: ubuntu-latest
 
     permissions:
@@ -43,23 +34,21 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
-
+          
       - uses: actions/checkout@v4
-
+    
       - uses: actions/download-artifact@v4
         with:
-          path: artifacts
-      - name: Display structure of downloaded files
-        run: ls -R
+           path: artifacts
 
       - name: Move repositories to webpage
         run: |
-          mv artifacts/docs/html github-pages
-          rm -rf artifacts/docs
+          mv artifacts/common/html github-pages
+          mv artifacts/common .
           mkdir github-pages/packages/ ${{runner.temp}}/platforms/
           mv artifacts/*/_CPack_Packages/* ${{runner.temp}}/platforms/
           for i in ${{runner.temp}}/platforms/*; do mv $i/IFW/*/repository/* $i/; rm -rf $i/IFW $i/TGZ; done;
-          mv ${{runner.temp}}/platforms/* github-pages/packages/
+          mv ${{runner.temp}}/platforms/* github-pages/packages/ 
           rm -rf artifacts/*/_CPack_Packages
 
       - name: Package github-page
@@ -68,10 +57,11 @@ jobs:
           cmake -E make_directory ${{runner.temp}}/page-packages
           cmake -E tar c ${{runner.temp}}/page-packages/github-pages.tar -- .
 
-      - name: Releases
-        uses: softprops/action-gh-release@v1
+      - name: Releases 
+        uses: softprops/action-gh-release@v2
         with:
           files: ./artifacts/*/*
+          body_path: ./common/CHANGELOG.md
 
       - uses: actions/upload-artifact@v4
         with:

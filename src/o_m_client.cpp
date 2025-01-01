@@ -1,6 +1,8 @@
-#include "omclient.hpp"
+#include "esterv/utils/o_m_client.hpp"
 #include <QJsonDocument>
 #include <QJsonObject>
+
+namespace Esterv::Utils::Weather {
 
 QHash<OMClient::TempUnit, QString> OMClient::tempUnitStr = {
     std::make_pair(OMClient::Celsius, "celsius"),
@@ -63,3 +65,4 @@ void OMResponse::errorFound(QNetworkReply::NetworkError code) {
   qDebug() << "code:" << code;
   qDebug() << "errorfound" << m_reply->readAll();
 }
+} // namespace Esterv::Utils::Weather

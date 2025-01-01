@@ -1,36 +1,61 @@
-
 if(USE_QML AND BUILD_EXAMPLES)
-	include(InstallRequiredSystemLibraries)
-	qt_add_executable(allcodes allcodes.cpp )
+  include(InstallRequiredSystemLibraries)
+  foreach(example "Allcodes" "OMClientApp")
 
-	qt6_add_qml_module(allcodes
-		URI  Allcodes
-		VERSION 1.0
-		QML_FILES
-		"qml/allcodes.qml"
-		RESOURCE_PREFIX
-		"/esterVtech.com/imports"
-		IMPORT_PATH ${CMAKE_BINARY_DIR}
-		)
+    qt_add_executable(${example} ${example}.cpp)
 
-	target_link_libraries(allcodes PRIVATE Qt::Gui Qt::Qml Qt::Quick openMeteo::OMClient
-		$<$<STREQUAL:$<TARGET_PROPERTY:openMeteo::OMClient,TYPE>,STATIC_LIBRARY>:openMeteo::OMClientplugin>
-		)
+    qt6_add_qml_module(
+      ${example}
+      URI
+      Examples${example}
+      VERSION
+      1.0
+      QML_FILES
+      "qml/${example}.qml"
+      RESOURCE_PREFIX
+      "/esterVtech.com/imports"
+      IMPORT_PATH
+      ${CMAKE_BINARY_DIR})
 
+    target_link_libraries(
+      ${example}
+      PRIVATE
+        OMClient
+        $<$<STREQUAL:$<TARGET_PROPERTY:OMClient,TYPE>,STATIC_LIBRARY>:OMClientplugin>
+    )
 
-	set_target_properties(allcodes PROPERTIES
-		WIN32_EXECUTABLE ON
-		MACOSX_BUNDLE ON
-		)
-	install(TARGETS allcodes COMPONENT examples
-		BUNDLE  DESTINATION . COMPONENT examples
-		LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-		)
-	if(QTDEPLOY)
-		qt_generate_deploy_qml_app_script(
-			TARGET allcodes
-			OUTPUT_SCRIPT deploy_script
-			)
-		install(SCRIPT ${deploy_script} COMPONENT examples)
-	endif(QTDEPLOY)
+    set_target_properties(${example} PROPERTIES WIN32_EXECUTABLE ON
+                                                MACOSX_BUNDLE ON)
+    install(
+      TARGETS ${example}
+      COMPONENT ${PROJECT_NAME}-examples
+      BUNDLE DESTINATION . COMPONENT ${PROJECT_NAME}-examples
+      LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+              COMPONENT ${PROJECT_NAME}-examples)
+    if(QTDEPLOY
+       AND NOT ANDROID
+       AND NOT EMSCRIPTEN)
+      qt_generate_deploy_qml_app_script(TARGET ${example} OUTPUT_SCRIPT
+                                        deploy_script)
+      install(SCRIPT ${deploy_script} COMPONENT ${PROJECT_NAME}-examples)
+    endif(
+      QTDEPLOY
+      AND NOT ANDROID
+      AND NOT EMSCRIPTEN)
+    if(ANDROID)
+      set_property(
+        TARGET ${example}
+        APPEND
+        PROPERTY QT_ANDROID_MIN_SDK_VERSION 30)
+      set_property(
+        TARGET ${example}
+        APPEND
+        PROPERTY QT_ANDROID_TARGET_SDK_VERSION 34)
+      set_property(
+        TARGET ${example}
+        APPEND
+        PROPERTY QT_ANDROID_SDK_BUILD_TOOLS_REVISION 34.0.0)
+
+    endif(ANDROID)
+  endforeach()
 endif(USE_QML AND BUILD_EXAMPLES)
