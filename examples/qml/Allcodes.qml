@@ -6,10 +6,9 @@ import Esterv.CustomControls.OpenMeteo
 ApplicationWindow {
     id: window
     visible: true
-background: Rectangle
-{
-    color: "#10141c"
-}
+    background: Rectangle {
+        color: "#10141c"
+    }
     Timer {
         id: timer
         interval: 50
@@ -53,7 +52,7 @@ background: Rectangle
         contentHeight: parent.width * 0.5 * 15
         GridLayout {
             id: grid
-            anchors.fill:parent
+            anchors.fill: parent
             columns: 2
 
             Rectangle {
@@ -113,7 +112,6 @@ background: Rectangle
                 }
             }
 
-
             Rectangle {
                 id: code2Am1Box
                 color: "#10141c"
@@ -145,7 +143,7 @@ background: Rectangle
             Rectangle {
                 id: code3Box
                 color: "#10141c"
-                width: window.width*0.5
+                width: window.width * 0.5
                 height: width
 
                 ShaderEffect {
@@ -452,6 +450,5 @@ background: Rectangle
                 }
             }
         }
-
     }
 }

@@ -31,10 +31,9 @@ Item {
     OMClient {
         id: omclient
         onCurrentWeatherChanged: {
-
-                let cions = "code" + omclient.currentWeather.weathercode;
-                    cions += "Am" + omclient.currentWeather.is_day;
-                shader.codeIcons = cions;
+            let cions = "code" + omclient.currentWeather.weathercode;
+            cions += "Am" + omclient.currentWeather.is_day;
+            shader.codeIcons = cions;
 
             temp.text = (isNaN(Math.round(omclient.currentWeather.temperature))) ? "" : (Math.round(omclient.currentWeather.temperature) + "\u00b0");
         }
@@ -84,10 +83,10 @@ Item {
         anchors.left: codefigure.right
         fontSizeMode: Text.Fit
         font: Qt.font({
-                family: control.boldFont.family,
-                weight: control.boldFont.weight,
-                pointSize: 250
-            })
+            family: control.boldFont.family,
+            weight: control.boldFont.weight,
+            pointSize: 250
+        })
 
         color: control.color
         horizontalAlignment: Text.AlignHCenter
@@ -101,10 +100,10 @@ Item {
         anchors.top: codefigure.bottom
         fontSizeMode: Text.Fit
         font: Qt.font({
-                family: control.lightfont.family,
-                weight: control.lightfont.weight,
-                pointSize: 150
-            })
+            family: control.lightfont.family,
+            weight: control.lightfont.weight,
+            pointSize: 150
+        })
 
         visible: control.showTime
         color: control.color

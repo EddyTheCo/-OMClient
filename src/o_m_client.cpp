@@ -65,4 +65,4 @@ void OMResponse::errorFound(QNetworkReply::NetworkError code) {
   qDebug() << "code:" << code;
   qDebug() << "errorfound" << m_reply->readAll();
 }
-}
+} // namespace Esterv::Utils::Weather
